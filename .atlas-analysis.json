@@ -1,0 +1,90 @@
+{
+  "projectType": "sdk-library",
+  "projectName": "GlassText",
+  "projectDescription": "SwiftUI library for creating glass morphism text effects",
+  "theme": "palm",
+  "primaryColor": "#4A90E2",
+  "lightColor": null,
+  "darkColor": null,
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "installation",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Usage Guides",
+            "pages": [
+              "guides/basic-usage",
+              "guides/glass-effects",
+              "guides/font-customization",
+              "guides/text-alignment",
+              "guides/localization"
+            ]
+          },
+          {
+            "group": "Examples",
+            "pages": [
+              "examples/font-designs",
+              "examples/font-weights",
+              "examples/glass-variations",
+              "examples/multiline-text",
+              "examples/background-images"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Core Components",
+            "pages": [
+              "api/glasstext",
+              "api/glass-effects"
+            ]
+          },
+          {
+            "group": "Modifiers",
+            "pages": [
+              "api/font-modifiers",
+              "api/text-modifiers"
+            ]
+          },
+          {
+            "group": "Platform Support",
+            "pages": [
+              "api/platform-support"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Glass morphism text rendering with SwiftUI glass effect API",
+    "Font customization with designs and weights",
+    "Cross-platform support (iOS, macOS, tvOS, watchOS)",
+    "Multi-line text support with alignment options",
+    "Localization support with LocalizedStringResource",
+    "Performance optimized with Core Text"
+  ],
+  "publicApiSurface": [
+    "GlassText(String, glass: Glass)",
+    "GlassText(LocalizedStringResource, glass: Glass)",
+    "Glass.clear",
+    "Glass.regular",
+    "Glass.regular.tint(Color)",
+    ".font() modifier",
+    ".fontWeight() modifier",
+    ".fontDesign() modifier",
+    ".multilineTextAlignment() modifier"
+  ]
+}
