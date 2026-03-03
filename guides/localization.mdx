@@ -1,0 +1,309 @@
+---
+title: Localization
+description: Implement multi-language support in GlassText using LocalizedStringResource
+---
+
+GlassText provides built-in support for localization through SwiftUI's `LocalizedStringResource`, making it easy to create glass morphism text effects in multiple languages.
+
+## LocalizedStringResource initializer
+
+GlassText includes a dedicated initializer for localized content:
+
+```swift GlassText.swift:32-38
+public init(
+    _ text: LocalizedStringResource,
+    glass: Glass = .clear
+) {
+    self.text = String(localized: text)
+    self.glass = glass
+}
+```
+
+## Basic localization
+
+Use localization keys directly with GlassText:
+
+```swift
+GlassText("localized.text.key", glass: .regular)
+    .font(.title)
+    .fontWeight(.medium)
+```
+
+<Note>
+  GlassText automatically resolves the localized string using SwiftUI's localization system.
+</Note>
+
+## Setting up localization
+
+### Step 1: Create localization files
+
+Add `.strings` or `.stringsdict` files to your project for each supported language:
+
+<Tabs>
+  <Tab title="en.lproj/Localizable.strings">
+    ```
+    "welcome.title" = "Welcome";
+    "app.name" = "Glass Text Demo";
+    "settings.header" = "Settings";
+    ```
+  </Tab>
+  <Tab title="es.lproj/Localizable.strings">
+    ```
+    "welcome.title" = "Bienvenido";
+    "app.name" = "Demostración de Texto Cristal";
+    "settings.header" = "Configuración";
+    ```
+  </Tab>
+  <Tab title="fr.lproj/Localizable.strings">
+    ```
+    "welcome.title" = "Bienvenue";
+    "app.name" = "Démo de Texte Verre";
+    "settings.header" = "Paramètres";
+    ```
+  </Tab>
+</Tabs>
+
+### Step 2: Use localized strings
+
+```swift
+import SwiftUI
+import GlassText
+
+struct LocalizedView: View {
+    var body: some View {
+        VStack(spacing: 30) {
+            GlassText("welcome.title", glass: .regular)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+            
+            GlassText("app.name", glass: .regular.tint(.cyan))
+                .font(.title2)
+                .fontWeight(.medium)
+            
+            GlassText("settings.header", glass: .regular)
+                .font(.headline)
+        }
+    }
+}
+```
+
+## Using LocalizedStringResource
+
+For more control, create `LocalizedStringResource` instances:
+
+```swift
+let welcomeText = LocalizedStringResource("welcome.title")
+GlassText(welcomeText, glass: .regular)
+    .font(.title)
+    .fontWeight(.bold)
+```
+
+## Localization with parameters
+
+For dynamic localized content, use string interpolation:
+
+<CodeGroup>
+```swift String formatting
+let userName = "John"
+let greeting = LocalizedStringResource("greeting.user", 
+                                       defaultValue: "Hello, \(userName)!")
+GlassText(greeting, glass: .regular)
+    .font(.title)
+```
+
+```swift Localizable.strings
+"greeting.user" = "Hello, %@!";
+```
+</CodeGroup>
+
+## Multi-language examples
+
+### Language switcher demo
+
+Create a demo showcasing different languages:
+
+```swift
+struct MultiLanguageDemo: View {
+    @State private var language = "en"
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            Picker("Language", selection: $language) {
+                Text("English").tag("en")
+                Text("Español").tag("es")
+                Text("Français").tag("fr")
+            }
+            .pickerStyle(.segmented)
+            .padding()
+            
+            GlassText("welcome.title", glass: .regular)
+                .font(.system(size: 48, weight: .bold))
+                .environment(\.locale, Locale(identifier: language))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Right-to-left language support
+
+GlassText automatically supports RTL languages like Arabic and Hebrew:
+
+```swift
+GlassText("rtl.text.key", glass: .regular)
+    .font(.title)
+    .multilineTextAlignment(.leading) // Automatically flips for RTL
+    .environment(\.layoutDirection, .rightToLeft)
+```
+
+<Tip>
+  The `.leading` and `.trailing` alignments automatically adapt to RTL languages, ensuring proper text direction.
+</Tip>
+
+## Complex script support
+
+GlassText uses Core Text, which provides excellent support for complex scripts:
+
+### Supported scripts
+
+- Arabic (with proper glyph shaping)
+- Hebrew
+- Chinese (Simplified and Traditional)
+- Japanese (Hiragana, Katakana, Kanji)
+- Korean (Hangul)
+- Thai
+- Devanagari
+- And many more
+
+```swift TextOutlineShape.swift:66-77
+let runs = CTLineGetGlyphRuns(line) as NSArray
+for runObj in runs {
+    let run = runObj as! CTRun
+    let glyphCount = CTRunGetGlyphCount(run)
+    if glyphCount == 0 { continue }
+
+    var glyphs = Array(repeating: CGGlyph(), count: glyphCount)
+    var positions = Array(repeating: CGPoint.zero, count: glyphCount)
+    CTRunGetGlyphs(run, CFRange(location: 0, length: 0), &glyphs)
+    CTRunGetPositions(run, CFRange(location: 0, length: 0), &positions)
+    // ...
+}
+```
+
+<Note>
+  Core Text handles complex text shaping, ligatures, and glyph positioning automatically, ensuring proper rendering across all scripts.
+</Note>
+
+## Best practices
+
+### Use semantic keys
+
+Use descriptive, hierarchical keys for maintainability:
+
+```swift
+// Good
+GlassText("home.welcome.title", glass: .regular)
+GlassText("settings.profile.name", glass: .regular)
+
+// Avoid
+GlassText("text1", glass: .regular)
+GlassText("string2", glass: .regular)
+```
+
+### Provide default values
+
+Always provide fallback text for development:
+
+```swift
+let title = LocalizedStringResource(
+    "feature.title",
+    defaultValue: "Feature Title"
+)
+GlassText(title, glass: .regular)
+```
+
+### Test with long translations
+
+Some languages translate to longer text. Test your layouts:
+
+```swift
+GlassText("long.text.key", glass: .regular)
+    .font(.title)
+    .multilineTextAlignment(.center)
+    .lineLimit(nil) // Allow wrapping
+```
+
+<Warning>
+  German and Russian translations often expand 30-50% compared to English. Always test your layouts with these languages.
+</Warning>
+
+## Complete localization example
+
+```swift
+import SwiftUI
+import GlassText
+
+struct LocalizedGlassDemo: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 30) {
+                // Header
+                GlassText("app.title", glass: .regular)
+                    .font(.system(size: 44))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                
+                // Features section
+                VStack(spacing: 15) {
+                    GlassText("features.glass", glass: .regular.tint(.cyan))
+                        .font(.system(size: 32).weight(.semibold))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("features.fonts", glass: .regular.tint(.orange))
+                        .font(.system(size: 32).weight(.semibold))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("features.localization", glass: .regular.tint(.purple))
+                        .font(.system(size: 32).weight(.semibold))
+                        .fontDesign(.rounded)
+                }
+                
+                // Footer
+                GlassText("footer.copyright", glass: .regular)
+                    .font(.caption)
+                    .fontWeight(.medium)
+            }
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple, .pink]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea()
+        }
+    }
+}
+```
+
+## Font fallbacks
+
+GlassText's Core Text integration automatically handles font fallbacks when glyphs aren't available:
+
+```swift TextOutlineShape.swift:79-80
+let attrs = CTRunGetAttributes(run) as NSDictionary
+let runFont = (attrs[kCTFontAttributeName] as! CTFont)
+```
+
+<Tip>
+  This ensures that even if your chosen font doesn't support a particular script, Core Text will automatically substitute appropriate glyphs from system fonts.
+</Tip>

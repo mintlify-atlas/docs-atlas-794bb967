@@ -1,0 +1,208 @@
+---
+title: Glass variations
+description: Discover different glass effect variations including clear, regular, and tinted glass options
+---
+
+## Overview
+
+GlassText provides three main glass effect variations: clear glass, regular glass, and tinted glass. Each variation creates a different visual impact and works best in specific design contexts.
+
+<Tip>
+Tinted glass effects are perfect for adding brand colors or creating colorful, eye-catching text displays.
+</Tip>
+
+## Glass effect options
+
+GlassText supports these glass variations:
+
+- **Clear glass** - Transparent glass effect (default)
+- **Regular glass** - Standard glass effect
+- **Tinted glass** - Glass with custom color tint
+
+## Basic variations
+
+<CodeGroup>
+
+```swift Clear glass
+GlassText("Clear Glass")
+    .font(.title)
+```
+
+```swift Regular glass
+GlassText("Regular Glass", glass: .regular)
+    .font(.title)
+```
+
+```swift Tinted glass
+GlassText("Red Tinted", glass: .regular.tint(.red))
+    .font(.title)
+```
+
+</CodeGroup>
+
+## Complete example
+
+This example demonstrates all glass variations in a vertical stack:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassVariationsDemo: View {
+    var body: some View {
+        VStack(spacing: 15) {
+            GlassText("Clear Glass")
+                .font(.title)
+            
+            GlassText("Regular Glass", glass: .regular)
+                .font(.title)
+            
+            GlassText("Red Tinted", glass: .regular.tint(.red))
+                .font(.title)
+            
+            GlassText("Blue Tinted", glass: .regular.tint(.blue))
+                .font(.title)
+            
+            GlassText("Purple Tinted", glass: .regular.tint(.purple))
+                .font(.title)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Tinted glass colors
+
+Create glass effects with any SwiftUI color:
+
+<CodeGroup>
+
+```swift Primary colors
+GlassText("Red Tinted", glass: .regular.tint(.red))
+GlassText("Blue Tinted", glass: .regular.tint(.blue))
+GlassText("Custom Tinted", glass: .regular.tint(.purple))
+```
+
+```swift Brand colors
+GlassText("Cyan Glass", glass: .regular.tint(.cyan))
+GlassText("Orange Glass", glass: .regular.tint(.orange))
+GlassText("White Glass", glass: .regular.tint(.white))
+```
+
+</CodeGroup>
+
+## Glass variations with serif
+
+Combine glass effects with serif font design:
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Clear Glass", glass: .clear)
+        .font(.system(size: 36, weight: .semibold))
+        .fontDesign(.serif)
+
+    GlassText("Regular Glass", glass: .regular)
+        .font(.system(size: 36, weight: .semibold))
+        .fontDesign(.serif)
+
+    GlassText("Tinted Glass", glass: .regular.tint(.red))
+        .font(.system(size: 36, weight: .semibold))
+        .fontDesign(.serif)
+}
+```
+
+## Preview example
+
+This example from the GlassText preview shows tinted glass with opacity:
+
+```swift
+HStack {
+    GlassText("Glass", glass: .clear.tint(.blue.opacity(0.25)))
+    GlassText("Text", glass: .clear.tint(.green.opacity(0.5)))
+}
+.font(.system(size: 200, design: .serif))
+.fontWeight(.bold)
+```
+
+## Advanced customization
+
+Create custom glass text with tint colors:
+
+```swift
+GlassText("Custom Glass Text", glass: .regular.tint(.cyan))
+    .font(.system(size: 48, weight: .bold, design: .rounded))
+    .multilineTextAlignment(.center)
+```
+
+## When to use each variation
+
+<Tabs>
+  <Tab title="Clear glass">
+    Use clear glass for subtle effects that blend naturally with backgrounds:
+    - Minimal, clean designs
+    - Subtle text overlays
+    - When you want text to be visible but not dominant
+    
+    ```swift
+    GlassText("Clear Glass")
+        .font(.title)
+    ```
+  </Tab>
+  <Tab title="Regular glass">
+    Use regular glass for standard glass morphism effects:
+    - Typical glass text implementations
+    - Balanced visibility and aesthetics
+    - Most common use case
+    
+    ```swift
+    GlassText("Regular Glass", glass: .regular)
+        .font(.title)
+    ```
+  </Tab>
+  <Tab title="Tinted glass">
+    Use tinted glass for colorful, branded, or emphasized text:
+    - Brand color integration
+    - Colorful, playful designs
+    - Creating visual emphasis
+    - Matching color schemes
+    
+    ```swift
+    GlassText("Tinted Glass", glass: .regular.tint(.purple))
+        .font(.title)
+    ```
+  </Tab>
+</Tabs>
+
+## Combining variations with backgrounds
+
+For best results, use glass variations over colorful or textured backgrounds:
+
+```swift
+ZStack {
+    // Background gradient
+    LinearGradient(
+        gradient: Gradient(colors: [.blue, .purple]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    
+    // Glass text variations
+    VStack(spacing: 20) {
+        GlassText("Clear", glass: .clear)
+        GlassText("Regular", glass: .regular)
+        GlassText("Tinted", glass: .regular.tint(.white))
+    }
+    .font(.system(size: 48, weight: .bold))
+}
+```
+
+<Note>
+Glass effects are most visible over backgrounds with color variation or texture. The glass morphism effect creates a translucent, frosted appearance that interacts beautifully with complex backgrounds.
+</Note>

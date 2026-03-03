@@ -1,0 +1,150 @@
+---
+title: Font designs
+description: Explore different font design styles with GlassText including default, serif, monospaced, and rounded fonts
+---
+
+## Overview
+
+GlassText supports all SwiftUI font designs, allowing you to create glass morphism effects with different typographic styles. Choose from default, serif, monospaced, or rounded designs to match your app's aesthetic.
+
+<Tip>
+Font designs are particularly effective when paired with the glass effect. Serif designs work well for elegant headers, while rounded designs create a friendly, modern feel.
+</Tip>
+
+## Available font designs
+
+GlassText supports four font design options:
+
+- **Default** - System default font
+- **Serif** - Serif font family for classic, elegant text
+- **Monospaced** - Monospaced font family for code or technical content
+- **Rounded** - Rounded font family for modern, friendly text
+
+## Basic example
+
+<CodeGroup>
+
+```swift Default design
+GlassText("Default Design", glass: .regular)
+    .fontDesign(.default)
+```
+
+```swift Serif design
+GlassText("Serif Design", glass: .regular)
+    .fontDesign(.serif)
+```
+
+```swift Monospaced design
+GlassText("Monospaced Design", glass: .regular)
+    .fontDesign(.monospaced)
+```
+
+```swift Rounded design
+GlassText("Rounded Design", glass: .regular)
+    .fontDesign(.rounded)
+```
+
+</CodeGroup>
+
+## Complete example
+
+This example demonstrates all four font designs in a vertical stack:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct FontDesignsDemo: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            GlassText("Default Design", glass: .regular)
+                .fontDesign(.default)
+            
+            GlassText("Serif Design", glass: .regular)
+                .fontDesign(.serif)
+            
+            GlassText("Monospaced Design", glass: .regular)
+                .fontDesign(.monospaced)
+            
+            GlassText("Rounded Design", glass: .regular)
+                .fontDesign(.rounded)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Using font designs with system fonts
+
+You can combine font designs with custom sizes and weights:
+
+```swift
+GlassText("Custom Glass Text", glass: .regular.tint(.cyan))
+    .font(.system(size: 48, weight: .bold, design: .rounded))
+```
+
+## Preview example
+
+This example from the GlassText preview demonstrates font designs with consistent sizing:
+
+```swift
+VStack(spacing: 15) {
+    Text("Font Designs")
+        .font(.headline)
+        .padding(8)
+        .glassEffect()
+
+    GlassText("Default")
+        .font(.system(size: 40))
+        .fontDesign(.default)
+    GlassText("Serif")
+        .font(.system(size: 40))
+        .fontDesign(.serif)
+    GlassText("Monospaced")
+        .font(.system(size: 40))
+        .fontDesign(.monospaced)
+    GlassText("Rounded")
+        .font(.system(size: 40))
+        .fontDesign(.rounded)
+}
+```
+
+## When to use each design
+
+<Tabs>
+  <Tab title="Default">
+    Use the default design for general-purpose text that matches the system font. Best for:
+    - Standard UI elements
+    - Body text with glass effects
+    - Maintaining consistency with system design
+  </Tab>
+  <Tab title="Serif">
+    Use serif design for elegant, classic typography. Best for:
+    - Headlines and titles
+    - Editorial content
+    - Luxury or premium app experiences
+  </Tab>
+  <Tab title="Monospaced">
+    Use monospaced design for technical or code-related content. Best for:
+    - Code snippets
+    - Data displays
+    - Technical documentation
+  </Tab>
+  <Tab title="Rounded">
+    Use rounded design for friendly, modern interfaces. Best for:
+    - Casual or playful apps
+    - Modern, minimalist designs
+    - Youth-oriented content
+  </Tab>
+</Tabs>
+
+<Note>
+Font designs work seamlessly with all glass effect variations including clear, regular, and tinted glass.
+</Note>

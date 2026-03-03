@@ -1,0 +1,125 @@
+---
+title: Glass effects
+description: Available glass effect options for GlassText
+---
+
+GlassText uses SwiftUI's `Glass` type to apply glass morphism effects. The glass parameter accepts various configurations.
+
+## Clear glass
+
+The default glass effect with no tint.
+
+```swift
+GlassText("Clear Glass")
+// or explicitly:
+GlassText("Clear Glass", glass: .clear)
+```
+
+## Regular glass
+
+Standard glass effect with material properties.
+
+```swift
+GlassText("Regular Glass", glass: .regular)
+```
+
+## Tinted glass
+
+Apply a custom color tint to the glass effect using the `.tint()` modifier.
+
+### With clear glass
+
+```swift
+GlassText("Blue Tinted", glass: .clear.tint(.blue))
+GlassText("Red Tinted", glass: .clear.tint(.red))
+```
+
+### With regular glass
+
+```swift
+GlassText("Cyan Tinted", glass: .regular.tint(.cyan))
+GlassText("Purple Tinted", glass: .regular.tint(.purple))
+```
+
+### With opacity
+
+```swift
+GlassText("Subtle Blue", glass: .clear.tint(.blue.opacity(0.25)))
+GlassText("Subtle Green", glass: .clear.tint(.green.opacity(0.5)))
+```
+
+## Examples
+
+### Different glass effects
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Clear Glass")
+        .font(.title)
+    
+    GlassText("Regular Glass", glass: .regular)
+        .font(.title)
+    
+    GlassText("Red Tinted", glass: .regular.tint(.red))
+        .font(.title)
+    
+    GlassText("Blue Tinted", glass: .regular.tint(.blue))
+        .font(.title)
+    
+    GlassText("Purple Tinted", glass: .regular.tint(.purple))
+        .font(.title)
+}
+```
+
+### Complete example with background
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassEffectsDemo: View {
+    var body: some View {
+        VStack(spacing: 20) {
+            GlassText("Light", glass: .regular.tint(.cyan))
+                .font(.system(size: 36).weight(.light))
+                .fontDesign(.rounded)
+            
+            GlassText("Bold", glass: .regular.tint(.orange))
+                .font(.system(size: 36).weight(.bold))
+                .fontDesign(.rounded)
+            
+            GlassText("Heavy", glass: .regular.tint(.purple))
+                .font(.system(size: 36).weight(.heavy))
+                .fontDesign(.rounded)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            AsyncImage(url: URL(string: "your-image-url")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            } placeholder: {
+                LinearGradient(
+                    gradient: Gradient(colors: [.blue, .purple]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+        }
+    }
+}
+```
+
+## Best practices
+
+For optimal glass morphism effects:
+
+- Use colorful or textured backgrounds to showcase the glass effect
+- Experiment with opacity levels in tinted glass (0.25 to 0.5 works well)
+- Combine with bold font weights for better visibility
+- Consider using rounded or serif font designs for aesthetic appeal
+
+## See also
+
+- [GlassText](/api/glasstext)

@@ -1,0 +1,198 @@
+---
+title: Font weights
+description: Learn how to use different font weights with GlassText, from ultraLight to black
+---
+
+## Overview
+
+GlassText supports all SwiftUI font weights, giving you precise control over text thickness and visual hierarchy. Use font weights to create emphasis and establish clear typographic relationships in your glass morphism designs.
+
+<Tip>
+Heavier font weights create more visible glass effects, while lighter weights produce subtle, elegant results.
+</Tip>
+
+## Available font weights
+
+GlassText supports nine font weight options:
+
+- `ultraLight` - Thinnest weight
+- `thin` - Very light weight
+- `light` - Light weight
+- `regular` - Normal weight
+- `medium` - Medium weight
+- `semibold` - Semi-bold weight
+- `bold` - Bold weight
+- `heavy` - Heavy weight
+- `black` - Thickest weight
+
+## Basic example
+
+<CodeGroup>
+
+```swift Light weight
+GlassText("Light Weight", glass: .regular)
+    .fontWeight(.light)
+```
+
+```swift Regular weight
+GlassText("Regular Weight", glass: .regular)
+    .fontWeight(.regular)
+```
+
+```swift Bold weight
+GlassText("Bold Weight", glass: .regular)
+    .fontWeight(.bold)
+```
+
+```swift Heavy weight
+GlassText("Heavy Weight", glass: .regular)
+    .fontWeight(.heavy)
+```
+
+</CodeGroup>
+
+## Complete example
+
+This example demonstrates multiple font weights in a vertical stack:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct FontWeightsDemo: View {
+    var body: some View {
+        VStack(spacing: 15) {
+            GlassText("Light Weight", glass: .regular)
+                .fontWeight(.light)
+            
+            GlassText("Regular Weight", glass: .regular)
+                .fontWeight(.regular)
+            
+            GlassText("Bold Weight", glass: .regular)
+                .fontWeight(.bold)
+            
+            GlassText("Heavy Weight", glass: .regular)
+                .fontWeight(.heavy)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Using weights with system fonts
+
+Combine font weights directly in the `.font()` modifier:
+
+```swift
+GlassText("Your Text")
+    .font(.system(size: 32, weight: .bold, design: .rounded))
+```
+
+## Preview example
+
+This example from the GlassText preview shows font weights with rounded design:
+
+```swift
+VStack(spacing: 15) {
+    Text("Font Weights")
+        .font(.headline)
+        .padding(8)
+        .glassEffect()
+
+    GlassText("Light")
+        .font(.system(size: 36).weight(.light))
+        .fontDesign(.rounded)
+    GlassText("Bold")
+        .font(.system(size: 36).weight(.bold))
+        .fontDesign(.rounded)
+    GlassText("Heavy")
+        .font(.system(size: 36).weight(.heavy))
+        .fontDesign(.rounded)
+}
+```
+
+## Weights with tinted glass
+
+Combine font weights with tinted glass effects for colorful emphasis:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassTextDemo: View {
+    var body: some View {
+        VStack(spacing: 15) {
+            GlassText("Light", glass: .regular.tint(.cyan))
+                .font(.system(size: 36).weight(.light))
+                .fontDesign(.rounded)
+            
+            GlassText("Bold", glass: .regular.tint(.orange))
+                .font(.system(size: 36).weight(.bold))
+                .fontDesign(.rounded)
+            
+            GlassText("Heavy", glass: .regular.tint(.purple))
+                .font(.system(size: 36).weight(.heavy))
+                .fontDesign(.rounded)
+        }
+    }
+}
+```
+
+## Large title with heavy weight
+
+Create impactful headers with large sizes and heavy weights:
+
+```swift
+GlassText("Glass 2048", glass: .regular)
+    .font(.system(size: 44))
+    .fontWeight(.heavy)
+    .fontDesign(.rounded)
+```
+
+## Visual hierarchy guide
+
+<Tabs>
+  <Tab title="Headers">
+    For main headers and titles, use heavier weights:
+    ```swift
+    GlassText("Main Title", glass: .regular)
+        .fontWeight(.heavy)
+        .font(.largeTitle)
+    ```
+  </Tab>
+  <Tab title="Subheaders">
+    For secondary headers, use medium to bold weights:
+    ```swift
+    GlassText("Subtitle", glass: .regular)
+        .fontWeight(.semibold)
+        .font(.title2)
+    ```
+  </Tab>
+  <Tab title="Body text">
+    For body text, use regular to medium weights:
+    ```swift
+    GlassText("Body content", glass: .regular)
+        .fontWeight(.regular)
+        .font(.body)
+    ```
+  </Tab>
+  <Tab title="Captions">
+    For captions and secondary text, use light weights:
+    ```swift
+    GlassText("Caption", glass: .regular)
+        .fontWeight(.light)
+        .font(.caption)
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+Font weights affect how prominently the glass effect appears. Heavier weights create more defined glass shapes, while lighter weights produce delicate, translucent effects.
+</Note>

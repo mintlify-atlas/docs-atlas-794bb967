@@ -1,0 +1,120 @@
+---
+title: GlassText
+description: SwiftUI library for glass morphism text effects using the latest glass effect API
+---
+
+<img
+  className="block dark:hidden"
+  src="/images/hero-light.png"
+  alt="GlassText Hero Light"
+/>
+<img
+  className="hidden dark:block"
+  src="/images/hero-dark.png"
+  alt="GlassText Hero Dark"
+/>
+
+## Create stunning glass text effects in SwiftUI
+
+GlassText is a modern SwiftUI library that brings beautiful glass morphism text effects to your iOS, macOS, tvOS, and watchOS applications. Built on SwiftUI's native glass effect API and optimized with Core Text for precise rendering.
+
+<CardGroup cols={2}>
+  <Card
+    title="Installation"
+    icon="download"
+    href="/installation"
+  >
+    Add GlassText to your project with Swift Package Manager
+  </Card>
+  <Card
+    title="Quick start"
+    icon="rocket"
+    href="/quickstart"
+  >
+    Get started with your first glass text effect in minutes
+  </Card>
+  <Card
+    title="API reference"
+    icon="code"
+    href="/api/glasstext"
+  >
+    Explore the complete API documentation
+  </Card>
+  <Card
+    title="Examples"
+    icon="palette"
+    href="/examples/font-designs"
+  >
+    Browse real-world examples and use cases
+  </Card>
+</CardGroup>
+
+## Key features
+
+<CardGroup cols={2}>
+  <Card title="Glass morphism effects" icon="sparkles">
+    Apply clear, regular, and tinted glass effects to your text
+  </Card>
+  <Card title="Font customization" icon="text">
+    Full control over font weights, designs, and sizes
+  </Card>
+  <Card title="Cross-platform" icon="devices">
+    Works on iOS, macOS, tvOS, and watchOS
+  </Card>
+  <Card title="Performance optimized" icon="gauge-high">
+    Uses Core Text for precise metrics and optimal rendering
+  </Card>
+  <Card title="Localization support" icon="language">
+    Built-in support for LocalizedStringResource
+  </Card>
+  <Card title="Modern SwiftUI" icon="cube">
+    Built with Swift 6.2 and latest SwiftUI APIs
+  </Card>
+</CardGroup>
+
+## Simple, powerful API
+
+```swift
+import SwiftUI
+import GlassText
+
+struct ContentView: View {
+    var body: some View {
+        GlassText("Hello, World!", glass: .regular)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [.blue, .purple]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+    }
+}
+```
+
+## Requirements
+
+- iOS 18.0+ / macOS 26.0+ / tvOS 26.0+ / watchOS 26.0+
+- Swift 6.2+
+- Xcode 26.0+
+
+<Note>
+  visionOS is not currently supported by GlassText.
+</Note>
+
+## What you can build
+
+GlassText is perfect for:
+
+- **Hero sections** with eye-catching glass text overlays
+- **App titles** and branding elements with modern aesthetics
+- **Dynamic backgrounds** where text needs to stand out
+- **Onboarding screens** with compelling visual effects
+- **Dashboard headers** that blend beautifully with content
+
+## Get started
+
+Ready to add glass morphism effects to your SwiftUI app? Start with the [installation guide](/installation) or jump straight into the [quick start tutorial](/quickstart).

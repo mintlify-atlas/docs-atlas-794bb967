@@ -1,0 +1,255 @@
+---
+title: Text alignment
+description: Control text alignment and layout in multi-line GlassText views
+---
+
+GlassText provides full support for text alignment using SwiftUI's standard alignment system. The library uses Core Text for precise multi-line text layout with accurate glyph positioning.
+
+## Basic alignment
+
+Use the `.multilineTextAlignment()` modifier to control how text aligns:
+
+<CodeGroup>
+```swift Leading
+GlassText("Left Aligned", glass: .regular)
+    .multilineTextAlignment(.leading)
+```
+
+```swift Center
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+```
+
+```swift Trailing
+GlassText("Right Aligned", glass: .regular)
+    .multilineTextAlignment(.trailing)
+```
+</CodeGroup>
+
+## Alignment types
+
+GlassText supports three alignment modes through SwiftUI's `TextAlignment` enum:
+
+### Leading alignment
+
+Aligns text to the left (or right in RTL languages):
+
+```swift
+GlassText("Left Aligned", glass: .regular)
+    .multilineTextAlignment(.leading)
+```
+
+### Center alignment
+
+Centers text horizontally:
+
+```swift
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+```
+
+<Note>
+  Center alignment is the default in the TextOutlineShape implementation.
+</Note>
+
+### Trailing alignment
+
+Aligns text to the right (or left in RTL languages):
+
+```swift
+GlassText("Right Aligned", glass: .regular)
+    .multilineTextAlignment(.trailing)
+```
+
+## Multi-line alignment
+
+Alignment becomes especially important with multi-line text:
+
+<Tabs>
+  <Tab title="Leading">
+    ```swift
+    GlassText("""
+    Multi-line
+    Glass Text
+    Left Aligned
+    """, glass: .regular)
+    .font(.system(size: 36, weight: .semibold))
+    .fontDesign(.serif)
+    .multilineTextAlignment(.leading)
+    ```
+  </Tab>
+  <Tab title="Center">
+    ```swift
+    GlassText("""
+    Multi-line
+    Glass Text
+    Center Aligned
+    """, glass: .regular)
+    .font(.system(size: 36, weight: .semibold))
+    .fontDesign(.serif)
+    .multilineTextAlignment(.center)
+    ```
+  </Tab>
+  <Tab title="Trailing">
+    ```swift
+    GlassText("""
+    Multi-line
+    Glass Text
+    Right Aligned
+    """, glass: .regular)
+    .font(.system(size: 36, weight: .semibold))
+    .fontDesign(.serif)
+    .multilineTextAlignment(.trailing)
+    ```
+  </Tab>
+</Tabs>
+
+## Environment-based alignment
+
+GlassText reads alignment from SwiftUI's environment:
+
+```swift GlassText.swift:20
+@Environment(\.multilineTextAlignment) private var multilineTextAlignment
+```
+
+This means alignment can be set at any level of the view hierarchy:
+
+```swift
+VStack {
+    GlassText("First Line", glass: .regular)
+    GlassText("Second Line", glass: .regular)
+    GlassText("Third Line", glass: .regular)
+}
+.multilineTextAlignment(.center) // Applies to all GlassText views
+```
+
+## Alignment implementation
+
+The alignment logic is implemented in TextOutlineShape using Core Text:
+
+```swift TextOutlineShape.swift:58-63
+let startX: CGFloat
+switch alignment {
+    case .leading: startX = 0
+    case .center: startX = (maxWidth - lineWidth) / 2
+    case .trailing: startX = maxWidth - lineWidth
+}
+```
+
+<Note>
+  The implementation calculates alignment offsets based on typographic bounds from Core Text, ensuring pixel-perfect alignment across different fonts and sizes.
+</Note>
+
+## Alignment with different content
+
+### Short vs. long lines
+
+Alignment becomes visible when lines have different lengths:
+
+```swift
+GlassText("""
+Short
+Medium length line
+Very long line of text here
+""", glass: .regular)
+.font(.title)
+.multilineTextAlignment(.center)
+```
+
+### With font designs
+
+Combine alignment with different font designs:
+
+```swift
+VStack(alignment: .leading, spacing: 20) {
+    GlassText("Default Design", glass: .regular)
+        .fontDesign(.default)
+        .multilineTextAlignment(.leading)
+    
+    GlassText("Serif Design", glass: .regular)
+        .fontDesign(.serif)
+        .multilineTextAlignment(.center)
+    
+    GlassText("Monospaced Design", glass: .regular)
+        .fontDesign(.monospaced)
+        .multilineTextAlignment(.trailing)
+}
+```
+
+## Complex layouts
+
+Create sophisticated layouts by combining alignment with other modifiers:
+
+```swift
+VStack(spacing: 30) {
+    GlassText("""
+    Multi-line
+    Glass Text
+    Effect
+    """, glass: .regular)
+    .font(.system(size: 36, weight: .semibold))
+    .fontDesign(.serif)
+    .multilineTextAlignment(.center)
+    
+    HStack(spacing: 20) {
+        GlassText("Left", glass: .regular.tint(.cyan))
+            .multilineTextAlignment(.leading)
+        
+        GlassText("Right", glass: .regular.tint(.purple))
+            .multilineTextAlignment(.trailing)
+    }
+}
+```
+
+## Alignment with frames
+
+When using frames, alignment determines how text positions within the available space:
+
+```swift
+GlassText("Aligned Text", glass: .regular)
+    .font(.title)
+    .multilineTextAlignment(.leading)
+    .frame(maxWidth: .infinity, alignment: .leading)
+```
+
+<Warning>
+  The `.frame(alignment:)` parameter controls the view's position in its parent, while `.multilineTextAlignment()` controls how text lines align within the text itself.
+</Warning>
+
+## Technical details
+
+### Core Text precision
+
+GlassText uses Core Text's typographic bounds for accurate alignment calculations:
+
+```swift TextOutlineShape.swift:42-48
+var lineWidths: [CGFloat] = []
+var maxWidth: CGFloat = 0
+for line in ctLines {
+    let w = CGFloat(CTLineGetTypographicBounds(line, nil, nil, nil))
+    lineWidths.append(w)
+    maxWidth = max(maxWidth, w)
+}
+```
+
+This ensures:
+- Accurate alignment across different scripts
+- Proper handling of ligatures and complex glyphs
+- Consistent alignment with font fallbacks
+
+### Glyph positioning
+
+Each glyph is positioned precisely based on the alignment offset:
+
+```swift TextOutlineShape.swift:82-88
+let g = glyphs[i]
+guard let gPath = CTFontCreatePathForGlyph(runFont, g, nil) else { continue }
+var t = CGAffineTransform(
+    translationX: startX + positions[i].x,
+    y: penY + positions[i].y
+)
+```
+
+<Tip>
+  The combination of Core Text metrics and precise glyph positioning ensures professional typography quality across all alignment modes.
+</Tip>

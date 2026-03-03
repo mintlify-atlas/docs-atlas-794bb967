@@ -1,80 +1,268 @@
 ---
-title: "Quickstart"
-description: "Start building awesome documentation in minutes"
+title: Quick start
+description: Create your first glass text effect in minutes
 ---
 
-## Get started in three steps
+## Your first glass text
 
-Get your documentation site running locally and make your first customization.
+Let's create a simple glass text effect to get you started with GlassText.
 
-### Step 1: Set up your local environment
-
-<AccordionGroup>
-  <Accordion icon="copy" title="Clone your docs locally">
-    During the onboarding process, you created a GitHub repository with your docs content if you didn't already have one. You can find a link to this repository in your [dashboard](https://dashboard.mintlify.com).
+<Steps>
+  <Step title="Import GlassText">
+    Add the import statement at the top of your SwiftUI view file:
     
-    To clone the repository locally so that you can make and preview changes to your docs, follow the [Cloning a repository](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) guide in the GitHub docs.
-  </Accordion>
-  <Accordion icon="rectangle-terminal" title="Start the preview server">
-    1. Install the Mintlify CLI: `npm i -g mint`
-    2. Navigate to your docs directory and run: `mint dev`
-    3. Open `http://localhost:3000` to see your docs live!
+    ```swift
+    import SwiftUI
+    import GlassText
+    ```
+  </Step>
+  
+  <Step title="Create a basic glass text view">
+    Use the `GlassText` initializer with a string and glass effect:
     
-    <Tip>Your preview updates automatically as you edit files.</Tip>
-  </Accordion>
-</AccordionGroup>
-
-### Step 2: Deploy your changes
-
-<AccordionGroup>
-  <Accordion icon="github" title="Install our GitHub app">
-    Install the Mintlify GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app).
+    ```swift
+    struct ContentView: View {
+        var body: some View {
+            GlassText("Hello, World!", glass: .regular)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+        }
+    }
+    ```
     
-    Our GitHub app automatically deploys your changes to your docs site, so you don't need to manage deployments yourself.
-</Accordion>
-<Accordion icon="palette" title="Update your site name and colors">
-    For a first change, let's update the name and colors of your docs site.
+    <Tip>
+      For best results, place glass text over colorful or textured backgrounds where the glass effect can shine.
+    </Tip>
+  </Step>
+  
+  <Step title="Add a background">
+    Glass effects look best over vibrant backgrounds. Add a gradient or image:
+    
+    ```swift
+    struct ContentView: View {
+        var body: some View {
+            GlassText("Hello, World!", glass: .regular)
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.blue, .purple]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+        }
+    }
+    ```
+  </Step>
+  
+  <Step title="Run your app">
+    Build and run your app to see the glass text effect in action!
+  </Step>
+</Steps>
 
-    1. Open `docs.json` in your editor.
-    2. Change the `"name"` field to your project name.
-    3. Update the `"colors"` to match your brand.
-    4. Save and see your changes instantly at `http://localhost:3000`.
+## Glass effect options
 
-    <Tip>Try changing the primary color to see an immediate difference!</Tip>
-  </Accordion>
-</AccordionGroup>
+GlassText supports three glass effect types:
 
-### Step 3: Go live
+<CodeGroup>
 
-<Accordion icon="rocket" title="Publish your docs">
-  1. Commit and push your changes.
-  2. Your docs will update and be live in moments!
-</Accordion>
+```swift Clear glass
+GlassText("Clear Glass")
+// Default - subtle glass effect
+```
+
+```swift Regular glass
+GlassText("Regular Glass", glass: .regular)
+// More pronounced glass effect
+```
+
+```swift Tinted glass
+GlassText("Tinted Glass", glass: .regular.tint(.cyan))
+// Glass effect with custom color tint
+```
+
+</CodeGroup>
+
+## Customize fonts
+
+GlassText uses SwiftUI's font system, giving you complete control over typography:
+
+### Font designs
+
+```swift
+VStack(spacing: 20) {
+    GlassText("Default Design", glass: .regular)
+        .fontDesign(.default)
+    
+    GlassText("Serif Design", glass: .regular)
+        .fontDesign(.serif)
+    
+    GlassText("Monospaced Design", glass: .regular)
+        .fontDesign(.monospaced)
+    
+    GlassText("Rounded Design", glass: .regular)
+        .fontDesign(.rounded)
+}
+```
+
+### Font weights
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Light Weight", glass: .regular)
+        .fontWeight(.light)
+    
+    GlassText("Regular Weight", glass: .regular)
+        .fontWeight(.regular)
+    
+    GlassText("Bold Weight", glass: .regular)
+        .fontWeight(.bold)
+    
+    GlassText("Heavy Weight", glass: .regular)
+        .fontWeight(.heavy)
+}
+```
+
+<Note>
+  GlassText supports all SwiftUI font weights: ultraLight, thin, light, regular, medium, semibold, bold, heavy, and black.
+</Note>
+
+### Custom font sizes
+
+```swift
+GlassText("Custom Glass Text", glass: .regular.tint(.cyan))
+    .font(.system(size: 48, weight: .bold, design: .rounded))
+```
+
+## Advanced example
+
+Here's a complete example showing multiple glass text elements with different styles:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassTextDemo: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                GlassText("Glass 2048", glass: .regular)
+                    .font(.system(size: 44))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                
+                VStack(spacing: 15) {
+                    GlassText("Light", glass: .regular.tint(.cyan))
+                        .font(.system(size: 36).weight(.light))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Bold", glass: .regular.tint(.orange))
+                        .font(.system(size: 36).weight(.bold))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Heavy", glass: .regular.tint(.purple))
+                        .font(.system(size: 36).weight(.heavy))
+                        .fontDesign(.rounded)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            AsyncImage(url: URL(string: "your-image-url")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            } placeholder: {
+                Color.gray.opacity(0.2)
+            }
+        }
+    }
+}
+```
+
+## Multi-line text
+
+GlassText automatically handles multi-line text with proper alignment:
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```
+
+## Text alignment
+
+Control text alignment using the standard SwiftUI modifier:
+
+<CodeGroup>
+
+```swift Leading
+GlassText("Left Aligned", glass: .regular)
+    .multilineTextAlignment(.leading)
+```
+
+```swift Center
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+```
+
+```swift Trailing
+GlassText("Right Aligned", glass: .regular)
+    .multilineTextAlignment(.trailing)
+```
+
+</CodeGroup>
+
+## Localization
+
+GlassText supports localized strings through `LocalizedStringResource`:
+
+```swift
+GlassText("localized.text.key", glass: .regular)
+    .font(.title)
+    .fontWeight(.medium)
+```
+
+## Best practices
+
+<CardGroup cols={2}>
+  <Card title="Use vibrant backgrounds" icon="image">
+    Glass effects are most visible over colorful gradients or textured images
+  </Card>
+  <Card title="Choose appropriate tints" icon="droplet">
+    Select tint colors that complement your background for better contrast
+  </Card>
+  <Card title="Consider font weight" icon="text-height">
+    Heavier font weights create more pronounced glass effects
+  </Card>
+  <Card title="Test on device" icon="mobile">
+    Glass effects may appear differently on actual devices vs. simulator
+  </Card>
+</CardGroup>
 
 ## Next steps
 
-Now that you have your docs running, explore these key features:
-
 <CardGroup cols={2}>
-
-<Card title="Write Content" icon="pen-to-square" href="/essentials/markdown">
-  Learn MDX syntax and start writing your documentation.
-</Card>
-
-<Card title="Customize style" icon="palette" href="/essentials/settings">
-  Make your docs match your brand perfectly.
-</Card>
-
-<Card title="Add code examples" icon="square-code" href="/essentials/code">
-  Include syntax-highlighted code blocks.
-</Card>
-
-<Card title="API documentation" icon="code" href="/api-reference/introduction">
-  Auto-generate API docs from OpenAPI specs.
-</Card>
-
+  <Card
+    title="API reference"
+    icon="code"
+    href="/api/glasstext"
+  >
+    Explore the complete API documentation
+  </Card>
+  <Card
+    title="Examples"
+    icon="palette"
+    href="/examples/font-designs"
+  >
+    Browse more examples and use cases
+  </Card>
 </CardGroup>
-
-<Note>
-  **Need help?** See our [full documentation](https://mintlify.com/docs) or join our [community](https://mintlify.com/community).
-</Note>

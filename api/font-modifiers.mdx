@@ -1,0 +1,95 @@
+---
+title: Font modifiers
+description: SwiftUI font modifiers for customizing GlassText appearance
+---
+
+GlassText supports standard SwiftUI font modifiers to customize the appearance of your glass morphism text.
+
+## .font()
+
+Applies a font to the glass text. You can use system fonts with custom size, weight, and design.
+
+```swift
+GlassText("Hello, World!", glass: .regular)
+    .font(.largeTitle)
+```
+
+```swift
+GlassText("Custom Glass Text", glass: .regular.tint(.cyan))
+    .font(.system(size: 48, weight: .bold, design: .rounded))
+```
+
+## .fontWeight()
+
+Sets the font weight for the glass text.
+
+```swift
+GlassText("Hello, World!", glass: .regular)
+    .font(.largeTitle)
+    .fontWeight(.bold)
+```
+
+### Available font weights
+
+- `.ultraLight`
+- `.thin`
+- `.light`
+- `.regular`
+- `.medium`
+- `.semibold`
+- `.bold`
+- `.heavy`
+- `.black`
+
+### Example
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Light Weight", glass: .regular)
+        .fontWeight(.light)
+    
+    GlassText("Regular Weight", glass: .regular)
+        .fontWeight(.regular)
+    
+    GlassText("Bold Weight", glass: .regular)
+        .fontWeight(.bold)
+    
+    GlassText("Heavy Weight", glass: .regular)
+        .fontWeight(.heavy)
+}
+```
+
+## .fontDesign()
+
+Sets the font design for the glass text.
+
+```swift
+GlassText("Clear Glass", glass: .clear)
+    .font(.system(size: 36, weight: .semibold))
+    .fontDesign(.serif)
+```
+
+### Available font designs
+
+- `.default` - System default font
+- `.serif` - Serif font family
+- `.monospaced` - Monospaced font family
+- `.rounded` - Rounded font family
+
+### Example
+
+```swift
+VStack(spacing: 20) {
+    GlassText("Default Design", glass: .regular)
+        .fontDesign(.default)
+    
+    GlassText("Serif Design", glass: .regular)
+        .fontDesign(.serif)
+    
+    GlassText("Monospaced Design", glass: .regular)
+        .fontDesign(.monospaced)
+    
+    GlassText("Rounded Design", glass: .regular)
+        .fontDesign(.rounded)
+}
+```

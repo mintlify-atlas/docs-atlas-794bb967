@@ -1,0 +1,121 @@
+---
+title: Installation
+description: Add GlassText to your SwiftUI project using Swift Package Manager
+---
+
+## Requirements
+
+Before installing GlassText, ensure your project meets these requirements:
+
+- iOS 18.0+ / macOS 26.0+ / tvOS 26.0+ / watchOS 26.0+
+- Swift 6.2 or later
+- Xcode 26.0 or later
+
+<Warning>
+  GlassText is not available for visionOS.
+</Warning>
+
+## Swift Package Manager
+
+Swift Package Manager is the recommended way to install GlassText. Choose one of the methods below:
+
+<Steps>
+  <Step title="Add package dependency in Xcode">
+    1. Open your project in Xcode
+    2. Go to **File** → **Add Package Dependencies**
+    3. Enter the repository URL:
+    
+    ```
+    https://github.com/yourusername/GlassText
+    ```
+    
+    4. Select the version you want to use (latest is recommended)
+    5. Click **Add Package**
+    6. Select your target and click **Add Package** again
+  </Step>
+  
+  <Step title="Verify installation">
+    Import GlassText in any Swift file to confirm installation:
+    
+    ```swift
+    import GlassText
+    ```
+    
+    If the import succeeds without errors, you're ready to go!
+  </Step>
+</Steps>
+
+### Alternative: Package.swift
+
+If you're building a Swift package or prefer to manage dependencies via `Package.swift`, add GlassText to your package dependencies:
+
+```swift Package.swift
+// swift-tools-version: 6.2
+import PackageDescription
+
+let package = Package(
+    name: "YourPackage",
+    platforms: [
+        .iOS(.v18),
+        .macOS(.v26),
+        .tvOS(.v26),
+        .watchOS(.v26),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/yourusername/GlassText", from: "1.0.0")
+    ],
+    targets: [
+        .target(
+            name: "YourTarget",
+            dependencies: ["GlassText"]
+        )
+    ]
+)
+```
+
+<Tip>
+  Use semantic versioning to specify the version range. Using `from: "1.0.0"` will automatically include compatible updates while avoiding breaking changes.
+</Tip>
+
+## Platform support
+
+GlassText supports the following platforms:
+
+<CodeGroup>
+
+```swift iOS
+.iOS(.v18)
+```
+
+```swift macOS
+.macOS(.v26)
+```
+
+```swift tvOS
+.tvOS(.v26)
+```
+
+```swift watchOS
+.watchOS(.v26)
+```
+
+</CodeGroup>
+
+## Version history
+
+### v1.0.0 (August 17, 2025)
+
+Initial release featuring:
+
+- Glass morphism text effects using SwiftUI
+- Support for custom font weights (ultraLight to black)
+- Support for font designs (default, serif, monospaced, rounded)
+- Text alignment options (leading, center, trailing)
+- Optional tint color support
+- Multi-line text support
+- Cross-platform compatibility
+- Efficient text rendering using Core Text
+
+## Next steps
+
+Now that GlassText is installed, head over to the [quick start guide](/quickstart) to create your first glass text effect.

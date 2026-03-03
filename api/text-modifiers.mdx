@@ -1,0 +1,47 @@
+---
+title: Text modifiers
+description: SwiftUI text modifiers for customizing GlassText layout and alignment
+---
+
+GlassText supports SwiftUI text modifiers to control text layout and alignment.
+
+## .multilineTextAlignment()
+
+Sets the alignment for multi-line glass text.
+
+```swift
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+```
+
+### Available alignments
+
+- `.leading` - Left-aligned text
+- `.center` - Center-aligned text
+- `.trailing` - Right-aligned text
+
+### Example
+
+```swift
+GlassText("Left Aligned", glass: .regular)
+    .multilineTextAlignment(.leading)
+
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+
+GlassText("Right Aligned", glass: .regular)
+    .multilineTextAlignment(.trailing)
+```
+
+### Multi-line text example
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```

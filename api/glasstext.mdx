@@ -1,0 +1,142 @@
+---
+title: GlassText
+description: A SwiftUI view that renders text with glass morphism effects
+---
+
+`GlassText` is a SwiftUI view that applies glass morphism effects to text using SwiftUI's native glass effect API.
+
+## Availability
+
+- iOS 26.0+
+- macOS 26.0+
+- tvOS 26.0+
+- watchOS 26.0+
+- visionOS: unavailable
+
+## Initializers
+
+### String initializer
+
+```swift
+public init(
+    _ text: String,
+    glass: Glass = .clear
+)
+```
+
+Creates a glass text view with the specified string.
+
+<ParamField path="text" type="String" required>
+  The text to display
+</ParamField>
+
+<ParamField path="glass" type="Glass" default=".clear">
+  The glass effect to apply. See [Glass effects](/api/glass-effects) for available options
+</ParamField>
+
+### LocalizedStringResource initializer
+
+```swift
+public init(
+    _ text: LocalizedStringResource,
+    glass: Glass = .clear
+)
+```
+
+Creates a glass text view with localized text.
+
+<ParamField path="text" type="LocalizedStringResource" required>
+  The localized string resource to display
+</ParamField>
+
+<ParamField path="glass" type="Glass" default=".clear">
+  The glass effect to apply. See [Glass effects](/api/glass-effects) for available options
+</ParamField>
+
+## Examples
+
+### Basic usage
+
+```swift
+import SwiftUI
+import GlassText
+
+struct ContentView: View {
+    var body: some View {
+        GlassText("Hello, World!", glass: .regular)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+    }
+}
+```
+
+### With custom font design
+
+```swift
+GlassText("Rounded Text", glass: .clear)
+    .font(.system(size: 40))
+    .fontDesign(.rounded)
+```
+
+### With font weights
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Light")
+        .font(.system(size: 36).weight(.light))
+        .fontDesign(.rounded)
+    
+    GlassText("Bold")
+        .font(.system(size: 36).weight(.bold))
+        .fontDesign(.rounded)
+    
+    GlassText("Heavy")
+        .font(.system(size: 36).weight(.heavy))
+        .fontDesign(.rounded)
+}
+```
+
+### With tinted glass
+
+```swift
+HStack {
+    GlassText("Glass", glass: .clear.tint(.blue.opacity(0.25)))
+    GlassText("Text", glass: .clear.tint(.green.opacity(0.5)))
+}
+.font(.system(size: 200, design: .serif))
+.fontWeight(.bold)
+```
+
+### With localized text
+
+```swift
+GlassText("localized.text.key", glass: .regular)
+    .font(.title)
+    .fontWeight(.medium)
+```
+
+### Multi-line text with alignment
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```
+
+## Font customization
+
+GlassText uses SwiftUI's standard font system and responds to these modifiers:
+
+- `.font()` - Set the font size and style
+- `.fontDesign()` - Choose font design (`.default`, `.serif`, `.monospaced`, `.rounded`)
+- `.fontWeight()` - Set font weight (`.ultraLight` to `.black`)
+- `.multilineTextAlignment()` - Set text alignment for multi-line text
+
+## See also
+
+- [Glass effects](/api/glass-effects)

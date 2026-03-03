@@ -1,0 +1,323 @@
+---
+title: Font customization
+description: Customize fonts, weights, and designs in GlassText for perfect typography
+---
+
+GlassText uses SwiftUI's font system, giving you full access to font customization including designs, weights, and sizes. The library leverages Core Text for precise text rendering across all font configurations.
+
+## Font basics
+
+Customize fonts using standard SwiftUI font modifiers:
+
+```swift
+GlassText("Your Text")
+    .font(.system(size: 32, weight: .bold, design: .rounded))
+    .fontDesign(.serif)
+    .fontWeight(.heavy)
+```
+
+## Font designs
+
+GlassText supports all SwiftUI font designs:
+
+<CodeGroup>
+```swift Default
+GlassText("Default Design", glass: .regular)
+    .fontDesign(.default)
+```
+
+```swift Serif
+GlassText("Serif Design", glass: .regular)
+    .fontDesign(.serif)
+```
+
+```swift Monospaced
+GlassText("Monospaced Design", glass: .regular)
+    .fontDesign(.monospaced)
+```
+
+```swift Rounded
+GlassText("Rounded Design", glass: .regular)
+    .fontDesign(.rounded)
+```
+</CodeGroup>
+
+### Design comparison
+
+Here's how different font designs look side-by-side:
+
+```swift
+VStack(spacing: 20) {
+    GlassText("Default Design", glass: .regular)
+        .fontDesign(.default)
+    
+    GlassText("Serif Design", glass: .regular)
+        .fontDesign(.serif)
+    
+    GlassText("Monospaced Design", glass: .regular)
+        .fontDesign(.monospaced)
+    
+    GlassText("Rounded Design", glass: .regular)
+        .fontDesign(.rounded)
+}
+```
+
+<Tip>
+  The rounded design pairs particularly well with bold weights for modern, friendly interfaces.
+</Tip>
+
+## Font weights
+
+GlassText supports the full range of font weights from ultraLight to black:
+
+- `.ultraLight`
+- `.thin`
+- `.light`
+- `.regular`
+- `.medium`
+- `.semibold`
+- `.bold`
+- `.heavy`
+- `.black`
+
+### Weight variations
+
+<Tabs>
+  <Tab title="Light weights">
+    ```swift
+    VStack(spacing: 15) {
+        GlassText("Ultra Light", glass: .regular)
+            .fontWeight(.ultraLight)
+        
+        GlassText("Thin", glass: .regular)
+            .fontWeight(.thin)
+        
+        GlassText("Light Weight", glass: .regular)
+            .fontWeight(.light)
+    }
+    ```
+  </Tab>
+  <Tab title="Medium weights">
+    ```swift
+    VStack(spacing: 15) {
+        GlassText("Regular Weight", glass: .regular)
+            .fontWeight(.regular)
+        
+        GlassText("Medium Weight", glass: .regular)
+            .fontWeight(.medium)
+        
+        GlassText("Semibold Weight", glass: .regular)
+            .fontWeight(.semibold)
+    }
+    ```
+  </Tab>
+  <Tab title="Heavy weights">
+    ```swift
+    VStack(spacing: 15) {
+        GlassText("Bold Weight", glass: .regular)
+            .fontWeight(.bold)
+        
+        GlassText("Heavy Weight", glass: .regular)
+            .fontWeight(.heavy)
+        
+        GlassText("Black Weight", glass: .regular)
+            .fontWeight(.black)
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Weight showcase example
+
+Display different font weights with glass effects:
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Light Weight", glass: .regular)
+        .fontWeight(.light)
+    
+    GlassText("Regular Weight", glass: .regular)
+        .fontWeight(.regular)
+    
+    GlassText("Bold Weight", glass: .regular)
+        .fontWeight(.bold)
+    
+    GlassText("Heavy Weight", glass: .regular)
+        .fontWeight(.heavy)
+}
+```
+
+## System font sizes
+
+Use the `.system()` modifier for precise control over size, weight, and design:
+
+```swift
+GlassText("Custom Glass Text", glass: .regular.tint(.cyan))
+    .font(.system(size: 48, weight: .bold, design: .rounded))
+```
+
+## Dynamic type styles
+
+GlassText works seamlessly with SwiftUI's dynamic type system:
+
+<CodeGroup>
+```swift Title styles
+GlassText("Large Title", glass: .regular)
+    .font(.largeTitle)
+
+GlassText("Title", glass: .regular)
+    .font(.title)
+
+GlassText("Title 2", glass: .regular)
+    .font(.title2)
+
+GlassText("Title 3", glass: .regular)
+    .font(.title3)
+```
+
+```swift Body styles
+GlassText("Headline", glass: .regular)
+    .font(.headline)
+
+GlassText("Body", glass: .regular)
+    .font(.body)
+
+GlassText("Callout", glass: .regular)
+    .font(.callout)
+```
+
+```swift Small styles
+GlassText("Subheadline", glass: .regular)
+    .font(.subheadline)
+
+GlassText("Footnote", glass: .regular)
+    .font(.footnote)
+
+GlassText("Caption", glass: .regular)
+    .font(.caption)
+```
+</CodeGroup>
+
+## Combining weight and design
+
+Mix font designs and weights for maximum typographic flexibility:
+
+```swift
+VStack(spacing: 15) {
+    GlassText("Light", glass: .regular.tint(.cyan))
+        .font(.system(size: 36).weight(.light))
+        .fontDesign(.rounded)
+    
+    GlassText("Bold", glass: .regular.tint(.orange))
+        .font(.system(size: 36).weight(.bold))
+        .fontDesign(.rounded)
+    
+    GlassText("Heavy", glass: .regular.tint(.purple))
+        .font(.system(size: 36).weight(.heavy))
+        .fontDesign(.rounded)
+}
+```
+
+<Note>
+  This example is taken directly from the GlassTextDemo in the source code, showing how different weights work with the rounded design and tinted glass effects.
+</Note>
+
+## Core Text integration
+
+GlassText uses Core Text for precise font rendering, which means it accurately handles:
+
+- Complex scripts and ligatures
+- Glyph positioning
+- Font fallbacks
+- Typography metrics (ascent, descent, leading)
+
+```swift GlassText.swift:58-64
+private func textBounds(for ctFont: CTFont, fontSize: CGFloat) -> CGSize {
+    let lines = text.components(separatedBy: CharacterSet.newlines)
+    let ascent = CTFontGetAscent(ctFont)
+    let descent = CTFontGetDescent(ctFont)
+    let leading = CTFontGetLeading(ctFont)
+    let lineHeight = ascent + descent + max(leading, fontSize * 0.2)
+    // ...
+}
+```
+
+<Warning>
+  GlassText resolves fonts using SwiftUI's environment, so make sure to apply font modifiers before the view is rendered.
+</Warning>
+
+## Font resolution
+
+The library accesses font information through SwiftUI's environment:
+
+```swift GlassText.swift:18-20
+@Environment(\.font) private var font
+@Environment(\.fontResolutionContext) private var fontResolutionContext
+@Environment(\.multilineTextAlignment) private var multilineTextAlignment
+```
+
+This means all standard SwiftUI font modifiers work seamlessly with GlassText.
+
+## Advanced font example
+
+Combine multiple font customizations for sophisticated typography:
+
+```swift
+ScrollView {
+    LazyVStack(spacing: 20) {
+        VStack(spacing: 15) {
+            Text("Font Designs")
+                .font(.headline)
+                .padding(8)
+                .glassEffect()
+
+            GlassText("Default")
+                .font(.system(size: 40))
+                .fontDesign(.default)
+            GlassText("Serif")
+                .font(.system(size: 40))
+                .fontDesign(.serif)
+            GlassText("Monospaced")
+                .font(.system(size: 40))
+                .fontDesign(.monospaced)
+            GlassText("Rounded")
+                .font(.system(size: 40))
+                .fontDesign(.rounded)
+        }
+
+        VStack(spacing: 15) {
+            Text("Font Weights")
+                .font(.headline)
+                .padding(8)
+                .glassEffect()
+
+            GlassText("Light")
+                .font(.system(size: 36).weight(.light))
+                .fontDesign(.rounded)
+            GlassText("Bold")
+                .font(.system(size: 36).weight(.bold))
+                .fontDesign(.rounded)
+            GlassText("Heavy")
+                .font(.system(size: 36).weight(.heavy))
+                .fontDesign(.rounded)
+        }
+    }
+}
+.frame(maxWidth: .infinity, maxHeight: .infinity)
+.background {
+    AsyncImage(
+        url: URL(string: "https://place.abh.ai/s3fs-public/placeholder/DSC_0287_400x400.JPG")!
+    ) { image in
+        image.resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+
+    } placeholder: {
+        Color.gray.opacity(0.2)
+    }
+}
+```
+
+<Tip>
+  This is the actual preview code from GlassText.swift, demonstrating real-world usage patterns.
+</Tip>

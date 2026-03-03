@@ -1,0 +1,317 @@
+---
+title: Background images
+description: Learn how to use GlassText with background images and gradients for stunning visual effects
+---
+
+## Overview
+
+GlassText creates the most striking effects when placed over colorful backgrounds, textured images, or gradients. The glass morphism effect interacts with the background to create a translucent, frosted appearance.
+
+<Tip>
+For best results, use backgrounds with good color variation or texture. The glass effect becomes more visible and impactful over complex backgrounds.
+</Tip>
+
+## Basic example with gradient
+
+Use a linear gradient as a simple background:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct ContentView: View {
+    var body: some View {
+        GlassText("Hello, World!", glass: .regular)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: [.blue, .purple]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
+    }
+}
+```
+
+## With background images
+
+Place glass text over remote images using AsyncImage:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct ContentView: View {
+    var body: some View {
+        GlassText("Hello, World!", glass: .regular)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                AsyncImage(url: URL(string: "your-image-url")) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    LinearGradient(
+                        gradient: Gradient(colors: [.blue, .purple]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                }
+            )
+    }
+}
+```
+
+## Complete example with ZStack
+
+Layer glass text over backgrounds using ZStack:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct BackgroundImageDemo: View {
+    var body: some View {
+        ZStack {
+            // Background
+            AsyncImage(url: URL(string: "your-background-image-url")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            } placeholder: {
+                LinearGradient(
+                    gradient: Gradient(colors: [.blue, .purple]),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            }
+            
+            // Glass text
+            GlassText("Glass Effect", glass: .regular.tint(.white))
+                .font(.system(size: 64, weight: .bold, design: .rounded))
+        }
+    }
+}
+```
+
+## ScrollView with background
+
+Combine glass text with scrollable content over a background image:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassTextDemo: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                GlassText("Glass 2048", glass: .regular)
+                    .font(.system(size: 44))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                
+                VStack(spacing: 15) {
+                    GlassText("Light", glass: .regular.tint(.cyan))
+                        .font(.system(size: 36).weight(.light))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Bold", glass: .regular.tint(.orange))
+                        .font(.system(size: 36).weight(.bold))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Heavy", glass: .regular.tint(.purple))
+                        .font(.system(size: 36).weight(.heavy))
+                        .fontDesign(.rounded)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            AsyncImage(url: URL(string: "your-image-url")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            } placeholder: {
+                Color.gray.opacity(0.2)
+            }
+        }
+    }
+}
+```
+
+## Preview example with background
+
+This example from the GlassText preview demonstrates the complete setup:
+
+```swift
+ScrollView {
+    LazyVStack(spacing: 20) {
+        VStack(spacing: 15) {
+            Text("Font Designs")
+                .font(.headline)
+                .padding(8)
+                .glassEffect()
+
+            GlassText("Default")
+                .font(.system(size: 40))
+                .fontDesign(.default)
+            GlassText("Serif")
+                .font(.system(size: 40))
+                .fontDesign(.serif)
+            GlassText("Monospaced")
+                .font(.system(size: 40))
+                .fontDesign(.monospaced)
+            GlassText("Rounded")
+                .font(.system(size: 40))
+                .fontDesign(.rounded)
+        }
+
+        VStack(spacing: 15) {
+            Text("Font Weights")
+                .font(.headline)
+                .padding(8)
+                .glassEffect()
+
+            GlassText("Light")
+                .font(.system(size: 36).weight(.light))
+                .fontDesign(.rounded)
+            GlassText("Bold")
+                .font(.system(size: 36).weight(.bold))
+                .fontDesign(.rounded)
+            GlassText("Heavy")
+                .font(.system(size: 36).weight(.heavy))
+                .fontDesign(.rounded)
+        }
+    }
+}
+.frame(maxWidth: .infinity, maxHeight: .infinity)
+.background {
+    AsyncImage(
+        url: URL(string: "https://place.abh.ai/s3fs-public/placeholder/DSC_0287_400x400.JPG")!
+    ) { image in
+        image.resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+
+    } placeholder: {
+        Color.gray.opacity(0.2)
+    }
+}
+```
+
+## Background types
+
+<Tabs>
+  <Tab title="Gradients">
+    Use gradients for smooth, colorful backgrounds:
+    ```swift
+    LinearGradient(
+        gradient: Gradient(colors: [.blue, .purple]),
+        startPoint: .topLeading,
+        endPoint: .bottomTrailing
+    )
+    ```
+  </Tab>
+  <Tab title="Images">
+    Use images for textured, realistic backgrounds:
+    ```swift
+    AsyncImage(url: URL(string: "your-image-url")) { image in
+        image
+            .resizable()
+            .scaledToFill()
+    } placeholder: {
+        Color.gray.opacity(0.2)
+    }
+    ```
+  </Tab>
+  <Tab title="Solid colors">
+    Use solid colors for simple, clean backgrounds:
+    ```swift
+    Color.blue.opacity(0.5)
+    ```
+  </Tab>
+  <Tab title="Combined">
+    Combine multiple background layers:
+    ```swift
+    ZStack {
+        Image("background")
+            .resizable()
+            .scaledToFill()
+        
+        LinearGradient(
+            gradient: Gradient(colors: [.clear, .black.opacity(0.3)]),
+            startPoint: .top,
+            endPoint: .bottom
+        )
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Tinted glass with white backgrounds
+
+Use white-tinted glass for optimal visibility over dark or busy backgrounds:
+
+```swift
+ZStack {
+    AsyncImage(url: URL(string: "dark-background-url")) { image in
+        image
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+    } placeholder: {
+        Color.black
+    }
+    
+    GlassText("Glass Effect", glass: .regular.tint(.white))
+        .font(.system(size: 64, weight: .bold, design: .rounded))
+}
+```
+
+## Large preview with background
+
+Create social media preview images with glass text:
+
+```swift
+HStack {
+    GlassText("Glass", glass: .clear.tint(.blue.opacity(0.25)))
+    GlassText("Text", glass: .clear.tint(.green.opacity(0.5)))
+}
+.font(.system(size: 200, design: .serif))
+.fontWeight(.bold)
+.frame(width: 1200, height: 630)
+.background {
+    AsyncImage(
+        url: URL(
+            string: "https://place.abh.ai/s3fs-public/placeholder/DSC_0287_400x400.JPG")!
+    ) { image in
+        image
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+
+    } placeholder: {
+        Color.gray.opacity(0.2)
+    }
+}
+```
+
+<Note>
+The glass morphism effect works by creating a translucent layer that blurs and interacts with whatever is behind it. More complex backgrounds create more visually interesting glass effects.
+</Note>
+
+## Best practices
+
+- Use high-contrast backgrounds to make glass text stand out
+- Add `ignoresSafeArea()` to background images for full-screen coverage
+- Provide placeholder gradients for AsyncImage to ensure good UX during loading
+- Consider tinted glass colors that complement your background colors
+- Test glass effects on different background types to find the best combination

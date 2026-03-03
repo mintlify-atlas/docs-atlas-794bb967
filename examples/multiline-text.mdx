@@ -1,0 +1,255 @@
+---
+title: Multiline text
+description: Create glass morphism effects with multiline text and configure text alignment
+---
+
+## Overview
+
+GlassText fully supports multiline text with configurable alignment options. Use multiline text for longer content, quotes, or multi-line titles with glass morphism effects.
+
+<Tip>
+Center-aligned multiline text works particularly well for quotes and prominent messages.
+</Tip>
+
+## Basic multiline example
+
+Create multiline text using triple quotes and line breaks:
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```
+
+## Text alignment options
+
+GlassText supports three alignment options:
+
+- **Leading** - Left-aligned text
+- **Center** - Center-aligned text
+- **Trailing** - Right-aligned text
+
+<CodeGroup>
+
+```swift Leading alignment
+GlassText("Left Aligned", glass: .regular)
+    .multilineTextAlignment(.leading)
+```
+
+```swift Center alignment
+GlassText("Center Aligned", glass: .regular)
+    .multilineTextAlignment(.center)
+```
+
+```swift Trailing alignment
+GlassText("Right Aligned", glass: .regular)
+    .multilineTextAlignment(.trailing)
+```
+
+</CodeGroup>
+
+## Complete multiline example
+
+This example demonstrates multiline text with different alignments:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct MultilineTextDemo: View {
+    var body: some View {
+        VStack(spacing: 30) {
+            GlassText("""
+            Leading
+            Aligned
+            Text
+            """, glass: .regular)
+                .multilineTextAlignment(.leading)
+                .font(.title2)
+            
+            GlassText("""
+            Center
+            Aligned
+            Text
+            """, glass: .regular)
+                .multilineTextAlignment(.center)
+                .font(.title2)
+            
+            GlassText("""
+            Trailing
+            Aligned
+            Text
+            """, glass: .regular)
+                .multilineTextAlignment(.trailing)
+                .font(.title2)
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Multiline quotes
+
+Create elegant multiline quotes with center alignment:
+
+```swift
+GlassText("""
+Glass morphism creates
+beautiful, modern
+text effects
+""", glass: .regular.tint(.white))
+.font(.system(size: 32, weight: .medium, design: .serif))
+.multilineTextAlignment(.center)
+```
+
+## Multiline with serif design
+
+Combine multiline text with serif fonts for classic typography:
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```
+
+## Long-form content
+
+Use multiline text for longer paragraphs or content blocks:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct LongFormDemo: View {
+    var body: some View {
+        ScrollView {
+            VStack(spacing: 20) {
+                GlassText("""
+                Welcome to GlassText
+                
+                Create beautiful glass morphism
+                effects with SwiftUI
+                """, glass: .regular)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                
+                GlassText("""
+                This library makes it easy to add
+                stunning glass effects to your text.
+                Perfect for modern, elegant designs.
+                """, glass: .regular.tint(.cyan))
+                    .font(.body)
+                    .multilineTextAlignment(.center)
+            }
+            .padding()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.blue, .purple]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        )
+    }
+}
+```
+
+## Multiline with different weights
+
+Create visual hierarchy with multiline text at different weights:
+
+```swift
+VStack(spacing: 25) {
+    GlassText("""
+    Main
+    Title
+    """, glass: .regular)
+        .font(.system(size: 48, weight: .heavy))
+        .multilineTextAlignment(.center)
+    
+    GlassText("""
+    Secondary
+    information
+    goes here
+    """, glass: .regular)
+        .font(.system(size: 24, weight: .regular))
+        .multilineTextAlignment(.center)
+}
+```
+
+## Use cases for multiline text
+
+<Tabs>
+  <Tab title="Quotes">
+    Display inspirational quotes or testimonials:
+    ```swift
+    GlassText("""
+    "Glass morphism brings
+    elegance and depth
+    to modern interfaces"
+    """, glass: .regular)
+        .font(.title2)
+        .fontDesign(.serif)
+        .multilineTextAlignment(.center)
+    ```
+  </Tab>
+  <Tab title="Headers">
+    Create multi-line headers and titles:
+    ```swift
+    GlassText("""
+    Welcome to
+    Your App
+    """, glass: .regular.tint(.white))
+        .font(.largeTitle)
+        .fontWeight(.bold)
+        .multilineTextAlignment(.center)
+    ```
+  </Tab>
+  <Tab title="Messages">
+    Display important messages or notifications:
+    ```swift
+    GlassText("""
+    Feature Update
+    Available Now
+    """, glass: .regular.tint(.cyan))
+        .font(.title)
+        .fontWeight(.semibold)
+        .multilineTextAlignment(.center)
+    ```
+  </Tab>
+  <Tab title="Lists">
+    Create visual lists with glass effects:
+    ```swift
+    GlassText("""
+    Step 1: Setup
+    Step 2: Configure
+    Step 3: Launch
+    """, glass: .regular)
+        .font(.body)
+        .multilineTextAlignment(.leading)
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+GlassText automatically calculates the required size for multiline text, ensuring proper layout regardless of the number of lines.
+</Note>

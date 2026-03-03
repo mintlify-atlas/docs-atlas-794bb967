@@ -1,0 +1,82 @@
+---
+title: Platform support
+description: Platform and version requirements for GlassText
+---
+
+GlassText requires specific platform versions to leverage SwiftUI's glass effect API and Core Text features.
+
+## Supported platforms
+
+GlassText is available on the following platforms:
+
+- **iOS 26.0+**
+- **macOS 26.0+**
+- **tvOS 26.0+**
+- **watchOS 26.0+**
+
+<Warning>
+  visionOS is not supported. The library is explicitly marked as unavailable for visionOS using the `@available(visionOS, unavailable)` annotation.
+</Warning>
+
+## Development requirements
+
+To build and use GlassText in your projects, you need:
+
+- **Swift 6.2+**
+- **Xcode 26.0+**
+
+The Package.swift file declares `swift-tools-version: 6.2` as the minimum required Swift version.
+
+## Technical requirements
+
+GlassText depends on several platform capabilities:
+
+### SwiftUI glass effect API
+
+The library uses SwiftUI's built-in `.glassEffect()` modifier, which is only available on iOS 26.0+ and equivalent versions on other platforms. This API provides the glass morphism rendering that creates the signature visual effect.
+
+### Core Text framework
+
+GlassText uses Core Text (`@preconcurrency import CoreText`) for precise text metrics and rendering:
+
+- `CTFont` for font information
+- `CTFontGetAscent`, `CTFontGetDescent`, `CTFontGetLeading` for typography metrics
+- `CTLineCreateWithAttributedString` and `CTLineGetTypographicBounds` for accurate text measurement
+
+These Core Text APIs ensure accurate text bounds calculation for multi-line text rendering.
+
+## Version compatibility
+
+The `@available` annotations in GlassText.swift ensure compile-time checking:
+
+```swift
+@available(iOS 26.0, macOS 26.0, tvOS 26.0, watchOS 26.0, *)
+@available(visionOS, unavailable)
+public struct GlassText: View {
+    // ...
+}
+```
+
+If you attempt to use GlassText on an unsupported platform or OS version, you'll receive a compiler error.
+
+## Platform-specific considerations
+
+### iOS and iPadOS
+
+GlassText works on all iOS 26.0+ devices, including iPhone and iPad. The glass effect renders optimally over colorful backgrounds and images.
+
+### macOS
+
+On macOS 26.0+, GlassText integrates with the system's native window chrome and materials. The effect works best when your app uses standard macOS window styles.
+
+### tvOS
+
+The library supports tvOS 26.0+ for creating glass text effects on Apple TV. Consider larger font sizes for optimal readability on TV screens.
+
+### watchOS
+
+GlassText is available on watchOS 26.0+. Due to the smaller screen size, use appropriate font sizes and consider the watch face's limited display area.
+
+### visionOS
+
+GlassText is explicitly unavailable on visionOS. The library's rendering approach is not compatible with visionOS's spatial computing environment. If you need glass text effects on visionOS, consider alternative approaches using visionOS-specific APIs.

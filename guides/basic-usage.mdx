@@ -1,0 +1,195 @@
+---
+title: Basic usage
+description: Learn how to integrate and use GlassText in your SwiftUI applications
+---
+
+GlassText is a SwiftUI library that creates stunning glass morphism text effects using the latest SwiftUI glass effect API. This guide will walk you through the fundamental usage patterns.
+
+## Installation
+
+Add GlassText to your project using Swift Package Manager:
+
+<Tabs>
+  <Tab title="Xcode">
+    1. In Xcode, go to `File` → `Add Package Dependencies`
+    2. Enter the repository URL: `https://github.com/yourusername/GlassText`
+    3. Select the version you want to use
+    4. Add to your target
+  </Tab>
+  <Tab title="Package.swift">
+    ```swift
+    dependencies: [
+        .package(url: "https://github.com/yourusername/GlassText", from: "0.1.0")
+    ]
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+  GlassText requires iOS 26.0+ / macOS 26.0+ / tvOS 26.0+ / watchOS 26.0+ and Swift 6.2+
+</Note>
+
+## Your first glass text
+
+The simplest way to use GlassText is to initialize it with a string:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct ContentView: View {
+    var body: some View {
+        GlassText("Hello, World!", glass: .regular)
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(
+                AsyncImage(url: URL(string: "your-image-url")) { image in
+                    image
+                        .resizable()
+                        .scaledToFill()
+                } placeholder: {
+                    LinearGradient(
+                        gradient: Gradient(colors: [.blue, .purple]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                }
+            )
+    }
+}
+```
+
+## Initializers
+
+GlassText provides two initializers to suit different needs:
+
+<CodeGroup>
+```swift String initializer
+public init(
+    _ text: String,
+    glass: Glass = .clear
+)
+```
+
+```swift LocalizedStringResource initializer
+public init(
+    _ text: LocalizedStringResource,
+    glass: Glass = .clear
+)
+```
+</CodeGroup>
+
+### Parameters
+
+- `text`: The text to display (String or LocalizedStringResource)
+- `glass`: The glass effect to apply (default: `.clear`)
+
+## Background best practices
+
+For optimal glass morphism effects, use GlassText over colorful or textured backgrounds:
+
+<Tip>
+  Glass morphism effects work best with dynamic backgrounds like images or gradients. Static solid colors won't showcase the glass effect effectively.
+</Tip>
+
+```swift
+ZStack {
+    // Background
+    AsyncImage(url: URL(string: "your-background-image-url")) { image in
+        image
+            .resizable()
+            .scaledToFill()
+            .ignoresSafeArea()
+    } placeholder: {
+        LinearGradient(
+            gradient: Gradient(colors: [.blue, .purple]),
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+    }
+    
+    // Glass text
+    GlassText("Glass Effect", glass: .regular.tint(.white))
+        .font(.system(size: 64, weight: .bold, design: .rounded))
+}
+```
+
+## Multi-line text
+
+GlassText automatically handles multi-line text with proper line height calculations using Core Text:
+
+```swift
+GlassText("""
+Multi-line
+Glass Text
+Effect
+""", glass: .regular)
+.font(.system(size: 36, weight: .semibold))
+.fontDesign(.serif)
+.multilineTextAlignment(.center)
+```
+
+<Note>
+  GlassText uses Core Text for precise text rendering and measurements, ensuring accurate multi-line text layout across different font designs and weights.
+</Note>
+
+## Complete example
+
+Here's a full working example showcasing multiple glass text elements:
+
+```swift
+import SwiftUI
+import GlassText
+
+struct GlassTextDemo: View {
+    var body: some View {
+        ScrollView {
+            LazyVStack(spacing: 20) {
+                GlassText("Glass 2048", glass: .regular)
+                    .font(.system(size: 44))
+                    .fontWeight(.heavy)
+                    .fontDesign(.rounded)
+                
+                VStack(spacing: 15) {
+                    GlassText("Light", glass: .regular.tint(.cyan))
+                        .font(.system(size: 36).weight(.light))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Bold", glass: .regular.tint(.orange))
+                        .font(.system(size: 36).weight(.bold))
+                        .fontDesign(.rounded)
+                    
+                    GlassText("Heavy", glass: .regular.tint(.purple))
+                        .font(.system(size: 36).weight(.heavy))
+                        .fontDesign(.rounded)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            AsyncImage(url: URL(string: "your-image-url")) { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .ignoresSafeArea()
+            } placeholder: {
+                Color.gray.opacity(0.2)
+            }
+        }
+    }
+}
+```
+
+## Platform support
+
+GlassText is cross-platform compatible:
+
+- iOS 26.0+
+- macOS 26.0+
+- tvOS 26.0+
+- watchOS 26.0+
+
+<Warning>
+  visionOS is not supported due to platform-specific glass effect API limitations.
+</Warning>
