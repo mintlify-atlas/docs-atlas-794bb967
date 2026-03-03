@@ -7,7 +7,7 @@ description: Add GlassText to your SwiftUI project using Swift Package Manager
 
 Before installing GlassText, ensure your project meets these requirements:
 
-- iOS 18.0+ / macOS 26.0+ / tvOS 26.0+ / watchOS 26.0+
+- iOS 26.0+ / macOS 26.0+ / tvOS 26.0+ / watchOS 26.0+
 - Swift 6.2 or later
 - Xcode 26.0 or later
 
@@ -26,7 +26,7 @@ Swift Package Manager is the recommended way to install GlassText. Choose one of
     3. Enter the repository URL:
     
     ```
-    https://github.com/yourusername/GlassText
+    https://github.com/ailtonvivaz/GlassText
     ```
     
     4. Select the version you want to use (latest is recommended)
@@ -56,13 +56,13 @@ import PackageDescription
 let package = Package(
     name: "YourPackage",
     platforms: [
-        .iOS(.v18),
+        .iOS(.v26),
         .macOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
     ],
     dependencies: [
-        .package(url: "https://github.com/yourusername/GlassText", from: "1.0.0")
+        .package(url: "https://github.com/ailtonvivaz/GlassText", from: "1.0.0")
     ],
     targets: [
         .target(
@@ -84,7 +84,7 @@ GlassText supports the following platforms:
 <CodeGroup>
 
 ```swift iOS
-.iOS(.v18)
+.iOS(.v26)
 ```
 
 ```swift macOS
